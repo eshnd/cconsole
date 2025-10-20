@@ -33,6 +33,7 @@ void exec(char* input){
 }
 
 int main(){
+  printf("cshell v0.0.1 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save;\" to save code\n")
   current_filename = ".cshell_code.c";
 
   dstring full_code;
@@ -74,7 +75,7 @@ int main(){
 
       exit(0);
     } else if (strcmp(to_run.str, "\ncshell save;\n") == 0){
-      printf("please provide a filename (less than 50 chars, please): ");
+      printf("Please provide a filename (less than 50 chars): ");
       
       char filename[55];
       scanf("%s", filename);
