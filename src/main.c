@@ -35,7 +35,7 @@ int exec(char* input){
 }
 
 int main(int argc, char** argv){
-  printf("cshell v0.0.3 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save <filename>;\" to save code\n");
+  printf("cshell v0.0.4 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save <filename>;\" to save code\n");
   current_filename = ".cshell_code.c";
   if (argc > 1){
     compiler = argv[1];
