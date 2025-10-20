@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct {
   char* str;
@@ -12,7 +13,7 @@ typedef struct {
 char* current_filename;
 char* compiler;
 
-void exec(char* input){
+int exec(char* input){
   char result[strlen(input) + 2];
   strcpy(result, input);
 
@@ -26,10 +27,11 @@ void exec(char* input){
   sprintf(command, "%s %s -o .cshell_compiled", compiler, current_filename);
 
   fclose(code_file);
-  system(command);
+  int out_result = system(command);
   system("./.cshell_compiled");
   remove(".cshell_compiled");
 
+  return out_result;
 }
 
 int main(int argc, char** argv){
@@ -49,6 +51,7 @@ int main(int argc, char** argv){
   while (1){
     dstring to_run;
     char* input = readline(">>> ");
+    add_history(input);
 
     to_run.size = strlen(input) + 4;
     to_run.str = malloc(to_run.size);
@@ -102,8 +105,14 @@ int main(int argc, char** argv){
 
     free(check_for_save);
     
+    char old_full_code[strlen(full_code.str) + 1];
+    strcpy(old_full_code, full_code.str);
+
     strcpy(full_code.str + strlen(full_code.str), to_run.str);
-    exec(full_code.str);
+    int out_result = exec(full_code.str);
+    if (out_result != 0){
+      strcpy(full_code.str, old_full_code);
+    } 
 
     free(to_run.str);
   }
