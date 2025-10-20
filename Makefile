@@ -1,5 +1,5 @@
 SRC = src/main.c
-END = cshell
+END = cconsole
 
 COMP = gcc
 FLAGS = -lreadline -lncurses
