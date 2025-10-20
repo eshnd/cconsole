@@ -23,8 +23,8 @@ void exec(char* input){
   FILE *code_file = fopen(current_filename, "w");
   fprintf(code_file, "%s", result); 
 
-  char command[strlen(current_filename) + 30]; // gcc current_filename -o .cshell_compiled
-  sprintf(command, "gcc %s -o .cshell_compiled", current_filename);
+  char command[strlen(current_filename) + strlen(compiler) + 30]; // gcc current_filename -o .cshell_compiled
+  sprintf(command, "%s %s -o .cshell_compiled", compiler, current_filename);
 
   fclose(code_file);
   system(command);
