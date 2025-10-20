@@ -8,4 +8,3 @@ You start in a main function and can write code in short snippets like the Pytho
 - alternatively, you can install `cshell` from the AUR
 # How to run
 - Choose your compiler when you run e.g. `cshell clang` or `cshell gcc` (gcc is default)
-- 
