@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <readline/readline.h>
 
 typedef struct {
   char* str;
@@ -12,8 +13,6 @@ char* current_filename;
 char* compiler;
 
 void exec(char* input){
-  
-
   char result[strlen(input) + 2];
   strcpy(result, input);
 
@@ -34,7 +33,7 @@ void exec(char* input){
 }
 
 int main(int argc, char** argv){
-  printf("cshell v0.0.1 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save;\" to save code\n");
+  printf("cshell v0.0.1 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save <filename>;\" to save code\n");
   current_filename = ".cshell_code.c";
   if (argc > 1){
     compiler = argv[1];
@@ -47,53 +46,66 @@ int main(int argc, char** argv){
   full_code.str = malloc(full_code.size);
   strcpy(full_code.str, "int main(){");
 
-  printf(">>> ");
   while (1){
     dstring to_run;
-    to_run.size = 2;
+    char* input = readline(">>> ");
+
+    to_run.size = strlen(input) + 4;
     to_run.str = malloc(to_run.size);
     to_run.str[0] = '\n';
-    to_run.str[1] = '\0';
+    strcpy(to_run.str + 1, input);
+    to_run.str[strlen(input) + 1] = '\n';
+    to_run.str[strlen(input) + 2] = '\0';
+    free(input);
 
-    int input_char = 0;
-
-    while (input_char != -1 && input_char != '\n'){
-      input_char = getchar();
-      if (to_run.size == strlen(to_run.str) + 1){
-        to_run.size *= 2;
-        to_run.str = realloc(to_run.str, to_run.size);
-      }
-      
-      size_t to_run_current_index = strlen(to_run.str);
-      to_run.str[to_run_current_index] = (char) input_char;
-      to_run.str[to_run_current_index + 1] = '\0';
-    }
+    // int input_char = 0;
+    //
+    // while (input_char != -1 && input_char != '\n'){
+    //   input_char = getchar();
+    //   if (to_run.size == strlen(to_run.str) + 1){
+    //     to_run.size *= 2;
+    //     to_run.str = realloc(to_run.str, to_run.size);
+    //   }
+    //   
+    //   size_t to_run_current_index = strlen(to_run.str);
+    //   to_run.str[to_run_current_index] = (char) input_char;
+    //   to_run.str[to_run_current_index + 1] = '\0';
+    // }
 
     while (full_code.size < strlen(full_code.str) + strlen(to_run.str) + 1) {
       full_code.size *= 2;
       full_code.str = realloc(full_code.str, full_code.size);
     }
-    
+
+    char* check_for_save = malloc(strlen(to_run.str) + 1);
+    strcpy(check_for_save, to_run.str);
+    if (strlen(check_for_save) > 13){
+      check_for_save[13] = '\0';
+    }
+
     if (strcmp(to_run.str, "\ncshell exit;\n") == 0){
       if (access(".cshell_code.c", F_OK) == 0){
         remove(".cshell_code.c");
       }
 
       exit(0);
-    } else if (strcmp(to_run.str, "\ncshell save;\n") == 0){
-      printf("Please provide a filename (less than 50 chars): ");
-      
-      char filename[55];
-      scanf("%s", filename);
-      rename(current_filename, filename);
+    } else if (strcmp(check_for_save, "\ncshell save ") == 0){
+      char* filename = malloc(strlen(to_run.str) + 1);
+      strcpy(filename, to_run.str);
+      filename[strlen(filename) - 2] = '\0';
+
+      rename(current_filename, filename + 13);
+
+      free(filename);
       continue;
     }
+
+    free(check_for_save);
     
     strcpy(full_code.str + strlen(full_code.str), to_run.str);
     exec(full_code.str);
 
     free(to_run.str);
-    printf("\n>>> ");
   }
 
   free(full_code.str);
