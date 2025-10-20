@@ -25,6 +25,7 @@ void exec(char* input){
 
   char command[strlen(current_filename) + strlen(compiler) + 30]; // gcc current_filename -o .cshell_compiled
   sprintf(command, "%s %s -o .cshell_compiled", compiler, current_filename);
+  printf("%s", command);
 
   fclose(code_file);
   system(command);
