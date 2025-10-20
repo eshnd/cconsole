@@ -9,6 +9,7 @@ typedef struct {
 } dstring;
 
 char* current_filename;
+char* compiler;
 
 void exec(char* input){
   
@@ -32,9 +33,14 @@ void exec(char* input){
 
 }
 
-int main(){
-  printf("cshell v0.0.1 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save;\" to save code\n")
+int main(int argc, char** argv){
+  printf("cshell v0.0.1 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save;\" to save code\n");
   current_filename = ".cshell_code.c";
+  if (argc > 1){
+    compiler = argv[1];
+  } else {
+    compiler = "gcc";
+  }
 
   dstring full_code;
   full_code.size = 12;
