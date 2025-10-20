@@ -1,5 +1,5 @@
 # cshell
-C shell for quick code testing
+C shell for quick code testing. Written by Eshaan Desh.
 # How it works
 You start in a main function and can write code in short snippets like the Python shell.
 # How to install
