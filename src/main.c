@@ -23,20 +23,20 @@ int exec(char* input){
   FILE *code_file = fopen(current_filename, "w");
   fprintf(code_file, "%s", result); 
 
-  char command[strlen(current_filename) + strlen(compiler) + 30]; // gcc current_filename -o .cshell_compiled
-  sprintf(command, "%s %s -o .cshell_compiled", compiler, current_filename);
+  char command[strlen(current_filename) + strlen(compiler) + 35]; // gcc current_filename -o .cconsole_compiled
+  sprintf(command, "%s %s -o .cconsole_compiled", compiler, current_filename);
 
   fclose(code_file);
   int out_result = system(command);
-  system("./.cshell_compiled");
-  remove(".cshell_compiled");
+  system("./.cconsole_compiled");
+  remove(".cconsole_compiled");
 
   return out_result;
 }
 
 int main(int argc, char** argv){
-  printf("cshell v0.0.4 by Eshaan Desh\n\"cshell exit;\" to exit and \"cshell save <filename>;\" to save code\n");
-  current_filename = ".cshell_code.c";
+  printf("cconsole v0.0.4 by Eshaan Desh\n\"cconsole exit;\" to exit and \"cconsole save <filename>;\" to save code\n");
+  current_filename = ".cconsole_code.c";
   if (argc > 1){
     compiler = argv[1];
   } else {
@@ -86,13 +86,13 @@ int main(int argc, char** argv){
       check_for_save[13] = '\0';
     }
 
-    if (strcmp(to_run.str, "\ncshell exit;\n") == 0){
-      if (access(".cshell_code.c", F_OK) == 0){
-        remove(".cshell_code.c");
+    if (strcmp(to_run.str, "\ncconsole exit;\n") == 0){
+      if (access(".cconsole_code.c", F_OK) == 0){
+        remove(".cconsole_code.c");
       }
 
       exit(0);
-    } else if (strcmp(check_for_save, "\ncshell save ") == 0){
+    } else if (strcmp(check_for_save, "\ncconsole save ") == 0){
       char* filename = malloc(strlen(to_run.str) + 1);
       strcpy(filename, to_run.str);
       filename[strlen(filename) - 2] = '\0';
