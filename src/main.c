@@ -82,8 +82,8 @@ int main(int argc, char** argv){
 
     char* check_for_save = malloc(strlen(to_run.str) + 1);
     strcpy(check_for_save, to_run.str);
-    if (strlen(check_for_save) > 13){
-      check_for_save[13] = '\0';
+    if (strlen(check_for_save) > 15){
+      check_for_save[15] = '\0';
     }
 
     if (strcmp(to_run.str, "\ncconsole exit;\n") == 0){
@@ -97,7 +97,7 @@ int main(int argc, char** argv){
       strcpy(filename, to_run.str);
       filename[strlen(filename) - 2] = '\0';
 
-      rename(current_filename, filename + 13);
+      rename(current_filename, filename + 15);
 
       free(filename);
       continue;
