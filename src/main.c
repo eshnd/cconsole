@@ -35,7 +35,7 @@ int exec(char* input){
 }
 
 int main(int argc, char** argv){
-  printf("cconsole v0.1.0 by Eshaan Desh\n\"cconsole exit;\" to exit and \"cconsole save <filename>;\" to save code\n");
+  printf("cconsole v0.1.1 by Eshaan Desh\n\"cconsole exit;\" to exit and \"cconsole save <filename>;\" to save code\n");
   current_filename = ".cconsole_code.c";
   if (argc > 1){
     compiler = argv[1];
