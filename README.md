@@ -9,3 +9,8 @@ You start in a main function and can write code in short snippets like the Pytho
 - alternatively, you can install `cconsole` from the AUR
 # How to run
 - Choose your compiler when you run e.g. `cconsole clang` or `cconsole gcc` (gcc is default)
+- Choose any inclusions you want to have before defining the main function
+- Now write any code you want and it'll execute!
+- `cconsole exit;` to exit safely
+- `cconsole save <filename>;` to save code properly
+
