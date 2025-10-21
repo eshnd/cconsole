@@ -13,4 +13,6 @@ You start in a main function and can write code in short snippets like the Pytho
 - Now write any code you want and it'll execute!
 - `cconsole exit;` to exit safely
 - `cconsole save <filename>;` to save code properly
+# The end
+have fun!
 
