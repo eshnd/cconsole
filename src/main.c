@@ -45,24 +45,10 @@ int main(int argc, char** argv){
 
   dstring full_code;
 
-  char* input = readline("Enter all inclusions seperated by commas (\"#include <stdio.h>,#include <stdlib.h>\"): ");
-  full_code.size = 15 + strlen(input);
+  full_code.size = 15; 
   full_code.str = malloc(full_code.size);
 
-  size_t idx;
-
-  for (idx = 0; idx < strlen(input); idx++){
-    if (input[idx] == ','){
-      full_code.str[idx] = '\n';
-    }
-    else {
-      full_code.str[idx] = input[idx];
-    }
-  }
-
-  free(input);
-
-  strcpy(full_code.str + idx, "\nint main(){");
+  strcpy(full_code.str, "\nint main(){");
 
   while (1){
     dstring to_run;
@@ -124,7 +110,14 @@ int main(int argc, char** argv){
     char old_full_code[strlen(full_code.str) + 1];
     strcpy(old_full_code, full_code.str);
 
-    strcpy(full_code.str + strlen(full_code.str), to_run.str);
+    if (to_run.str[1] == '#'){
+      strcpy(full_code.str + strlen(to_run.str), full_code.str);
+      strcpy(full_code.str, to_run.str);
+      full_code.str[strlen(full_code.str)] = '\n';
+    }else {
+      strcpy(full_code.str + strlen(full_code.str), to_run.str);
+    }
+
     int out_result = exec(full_code.str);
     if (out_result != 0){
       strcpy(full_code.str, old_full_code);
